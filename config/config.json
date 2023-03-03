@@ -1,0 +1,18 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "address-book-1-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/addressBook1/AddressBook1WebPart.js",
+          "manifest": "./src/webparts/addressBook1/AddressBook1WebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "AddressBook1WebPartStrings": "lib/webparts/addressBook1/loc/{locale}.js"
+  }
+}
