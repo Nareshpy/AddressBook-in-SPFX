@@ -2,11 +2,13 @@ import * as React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IformView } from '../../assets/formview';
-import { Services } from '../services';
-import { IValidates } from '../validateinterface';
+import { IValidates } from '../../modals/validates';
+import createItem from '../../services/addContact';
+import getContactById from '../../services/getContactById';
+import getAllItems from '../../services/getContacts';
+import updateContact from '../../services/updateContact';
 import './formpage.css'
 import { ValidateForm } from './formvalidator';
-let contactServices: Services = new Services();
 let validateForm: ValidateForm = new ValidateForm();
 export function Formpage({ id, statesObj, setStatesObj }: { id: string, statesObj: { showFormpage: boolean, formInfo: IformView, selectedContact: any, showContactInfo: boolean, validates: IValidates }, setStatesObj: Function }) {
     const navigate = useNavigate();
@@ -30,9 +32,9 @@ export function Formpage({ id, statesObj, setStatesObj }: { id: string, statesOb
             if (statesObj.formInfo.action === "Add") {
                 let newContact: any;
                 newContact = { name: statesObj.formInfo.name.toString(), email: statesObj.formInfo.email, mobile: statesObj.formInfo.mobile, address: statesObj.formInfo.address, website: statesObj.formInfo.website, landline: statesObj.formInfo.landline }
-                contactServices.createItem(newContact).then((fulFilled)=>{
+                createItem(newContact).then((fulFilled)=>{
                     if(fulFilled){
-                        contactServices.getAllItems().then((items) => {
+                        getAllItems().then((items) => {
                             setStatesObj({ ...statesObj, contacts: items })
         
                         }).catch((msg) => { console.error(msg) })
@@ -46,16 +48,16 @@ export function Formpage({ id, statesObj, setStatesObj }: { id: string, statesOb
             else {
                 let newContact: any;
                 newContact = { Id: statesObj.selectedContact.Id, name: statesObj.formInfo.name, email: statesObj.formInfo.email, mobile: statesObj.formInfo.mobile, address: statesObj.formInfo.address, website: statesObj.formInfo.website, landline: statesObj.formInfo.landline }
-                contactServices.updateContact(newContact.Id, newContact).then((fulFilled)=>{
+                updateContact(newContact.Id, newContact).then((fulFilled)=>{
                     if(fulFilled){
-                        contactServices.getAllItems().then((items) => {
+                        getAllItems().then((items) => {
                             setStatesObj({ ...statesObj, contacts: items })
                         }).catch((msg) => { console.error(msg) }) 
                     }
                 })
                 navigate('/');
                 let varForm: IformView = { ...statesObj.formInfo, name: "", id: "", mobile: "", address: "", email: "", website: "", landline: "" }
-                setStatesObj({ ...statesObj, formInfo: varForm, showFormpage: false, showContactInfo: true, selectedContact: contactServices.getContactById(newContact.Id) });
+                setStatesObj({ ...statesObj, formInfo: varForm, showFormpage: false, showContactInfo: true, selectedContact: getContactById(newContact.Id) });
             }
         }
         else {

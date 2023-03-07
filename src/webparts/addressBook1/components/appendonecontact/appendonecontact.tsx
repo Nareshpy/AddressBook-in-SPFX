@@ -1,4 +1,4 @@
-import "./components/appendonecontact.css";
+import "./appendonecontact.css"
 import * as React from "react";
 export function AddingContact({statesObj,setStatesObj,newPerson,ContactInfoState}: {statesObj:any,setStatesObj:Function, newPerson: any,ContactInfoState:Function }) {
        

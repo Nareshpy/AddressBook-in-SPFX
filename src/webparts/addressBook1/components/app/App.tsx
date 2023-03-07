@@ -3,12 +3,12 @@ import { IformView } from '../../assets/formview';
 import ContactsDisplay from '../contactsdisplay/contactdisplay';
 import { Header } from '../header/header';
 import { NavbarFunction } from '../navbar/navbar';
-import { Services } from '../services';
 import Title from '../title/title';
-import { IValidates } from '../validateinterface';
 import './App.css';
 import {useEffect, useState} from 'react'
-let contactServices: Services = new Services();
+import getContactById from '../../services/getContactById';
+import getAllItems from '../../services/getContacts';
+import { IValidates } from '../../modals/validates';
 function App() {
   const [statesObj, setStatesObj] = useState<{ showFormpage: boolean, formInfo: IformView, selectedContact: any, showContactInfo: boolean, validates: IValidates,contacts:any[] }>({
     showFormpage: false, formInfo: {
@@ -37,13 +37,12 @@ function App() {
     },contacts:[]
   })
   useEffect(()=>{
-    contactServices.getAllItems().then((items)=>{
+    getAllItems().then((items)=>{
       setStatesObj({...statesObj,contacts:items})
     }).catch((msg)=>{console.error(msg)})
   },[])
-  
   function gettingContactfromPrmosie(id:string){
-    contactServices.getContactById(id).then((person)=>{
+    getContactById(id).then((person)=>{
       setStatesObj({...statesObj,showFormpage:false,showContactInfo:true,selectedContact:person})
     })
   }
