@@ -2,7 +2,6 @@ import "./navbar.css";
 import { IformView } from "../../assets/formview";
 import { Link } from "react-router-dom";
 import * as React from "react";
-import { images } from "../../assets/images";
 export function NavbarFunction({ statesObj, setStatesObj }: { statesObj: any, setStatesObj: Function }) {
   let varForm:IformView={...statesObj.formInfo,action:"Add",name:"",id:"",mobile:"",address:"",email:"",website:"",landline:""}
   return (<div>
@@ -17,7 +16,7 @@ export function NavbarFunction({ statesObj, setStatesObj }: { statesObj: any, se
            <Link to='/form/new'> +ADD </Link></button>
           </div>
         </div>
-        <div className="blogimage"><img src={images.blogIcon} alt="react logo" /></div>
+        <div className="blogimage"><img src={require("../../assets/blog-icon.png")} alt="react logo" /></div>
       </div>
     </nav>
   </div>)

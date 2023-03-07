@@ -1,27 +1,52 @@
-import { people } from "../allcontacts";
 import { IPerson } from "../assets/icontact";
+
+import { sp } from "@pnp/sp";
+import "@pnp/sp/webs";
+import "@pnp/sp/lists";
+import "@pnp/sp/items";
+
 export class Services {
-    addContact(newPerson: IPerson): void {
-        people.unshift(newPerson);
+   
+    async deleteDetails(id: string): Promise<boolean> {
+       return await sp.web.lists.getByTitle("Contacts").items.getById(parseInt(id)).delete().then(()=>{return true});
     }
-    deleteDetails(id: string): void {
-        let toDelete: IPerson = this.getContactById(id);
-        people.splice(people.indexOf(toDelete), 1);
+    async updateContact(id: any, editedContact: any): Promise<boolean> {
+        return  sp.web.lists.getByTitle("Contacts").items.getById(id).update({
+            'name': editedContact.name,
+            'mobile': editedContact.mobile,
+            'email': editedContact.email,
+            'landline': editedContact.landline,
+             'address': editedContact.address,
+            'website': editedContact.website,  
+          }).then(()=>{
+            return true
+          })
     }
-    updateContact(id: string, editedContact: IPerson): void {
-        let toEdit: IPerson = this.getContactById(id);
-        // toEdit.name = editedContact.name;
-        // toEdit.email = editedContact.email;
-        // toEdit.mobile = editedContact.mobile;
-        // toEdit.landline = editedContact.landline;
-        // toEdit.website = editedContact.website;
-        // toEdit.address = editedContact.address;
-        people[people.indexOf(toEdit)]=editedContact;
+    async getContactById(id: string): Promise<any> {
+      const item: any = await sp.web.lists.getByTitle("Contacts").items.getById(parseInt(id)).get();
+           return item;
     }
-    getContactById(id: string): IPerson {
-        return people.find((contact) => {
-            return contact.id == id
-        }) as IPerson
-    }
+    createItem = async (newPerson:IPerson) => {
+        try {
+          return await sp.web.lists.getByTitle("Contacts").items.add({
+            'name': newPerson.name,
+            'mobile': newPerson.mobile,
+            'email': newPerson.email,
+            'landline': newPerson.landline,
+             'address': newPerson.address,
+            'website': newPerson.website,  
+          }).then(()=>{return true})
+           }
+        catch (e) {
+          console.error(e);
+        }
+      }
+    
+
+    getAllItems = async () => {
+        return await  sp.web.lists.getByTitle("Contacts").items.get();
+      }
+    
+
 }
 

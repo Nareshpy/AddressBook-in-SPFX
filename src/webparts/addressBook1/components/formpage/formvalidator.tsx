@@ -10,8 +10,6 @@ ValidateEmail(tempEmail:string){
     if (tempEmail == "") {
         return true;
       } else {
-        // const emailRef = /^[a-zA-Z0-9\._]+@[a-zA-Z0-9]+\.[a-z]+.[a-z]+?$/;
-        // let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         const emailCheck:RegExp= /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/
         if (tempEmail.match(emailCheck)) {
             return false;

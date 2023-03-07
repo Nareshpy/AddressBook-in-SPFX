@@ -13,6 +13,7 @@
   },
   "externals": {},
   "localizedResources": {
-    "AddressBook1WebPartStrings": "lib/webparts/addressBook1/loc/{locale}.js"
+    "AddressBook1WebPartStrings": "lib/webparts/addressBook1/loc/{locale}.js",
+    "ControlStrings": "node_modules/@pnp/spfx-controls-react/lib/loc/{locale}.js"
   }
 }

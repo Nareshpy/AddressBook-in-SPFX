@@ -1,26 +1,27 @@
-import { IPerson } from "../../icontact";
-import { images } from "../../assets/images";
 import "./contactinfo.css"
 import { IformView } from "../../assets/formview";
 import { Services } from "../services";
 import { useNavigate } from "react-router-dom";
 import * as React from "react";
-let contactServices:Services=new Services();
-export default function ContactInfo({setStatesObj,statesObj, newPerson}:{setStatesObj:Function,statesObj:any, newPerson:IPerson}){
-    const navigate=useNavigate();
-    function handleEdit()
-    {
-        let varForm:IformView;
-         varForm={...statesObj.selectedContact,action:"edit"}
-        setStatesObj({...statesObj,formInfo:varForm,showFormpage:true,showContactInfo:false})
-        navigate('/form/'+statesObj.selectedContact.id);
+let contactServices: Services = new Services();
+export default function ContactInfo({ setStatesObj, statesObj, newPerson }: { setStatesObj: Function, statesObj: any, newPerson: any }) {
+    const navigate = useNavigate();
+    function handleEdit() {
+        let varForm: IformView;
+        varForm = { ...statesObj.selectedContact, action: "edit" }
+        setStatesObj({ ...statesObj, formInfo: varForm, showFormpage: true, showContactInfo: false })
+        navigate('/form/' + statesObj.selectedContact.Id);
     }
-    function handleDelete()
-    {
-     contactServices.deleteDetails(statesObj.selectedContact.id)
-     setStatesObj({...statesObj,showFormpage:false,showContactInfo:false})
-     navigate('/');
-    } 
+    function handleDelete() {
+        contactServices.deleteDetails(statesObj.selectedContact.Id).then((fulFilled)=>{
+        if(fulFilled){
+            contactServices.getAllItems().then((items) => {
+                setStatesObj({ ...statesObj, contacts: items })
+            }).catch((msg) => { console.error(msg) })}
+        })
+        setStatesObj({ ...statesObj, showFormpage: false, showContactInfo: false })
+        navigate('/');
+    }
     return (
         <div className="contactInfo">
             <div className="nameBar">
@@ -28,12 +29,12 @@ export default function ContactInfo({setStatesObj,statesObj, newPerson}:{setStat
                 <div className="center">
                     <div className="modifyBar">
                         <div className="modify" id="edit">
-                            <img id="editICon" className="editSymbol" src={images.editIcon} />
-                            <a className="btn" onClick={()=>handleEdit()}>EDIT</a>
+                            <img id="editICon" className="editSymbol" src={require("../../assets/Edit-icon.png")} />
+                            <a className="btn" onClick={() => handleEdit()}>EDIT</a>
                         </div>
                         <div className="modify" id="delete">
-                            <img className="deleteSymbol" src={images.deleteIcon} />
-                            <a className="btn" onClick={()=>handleDelete()}>DELETE</a>
+                            <img className="deleteSymbol" src={require("../../assets/delete1.png")} />
+                            <a className="btn" onClick={() => handleDelete()}>DELETE</a>
                         </div>
                     </div>
                 </div>
