@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { IformView } from '../../assets/formview';
+import { IformView } from '../../modals/formview';
 import { IValidates } from '../../modals/validates';
 import createItem from '../../services/addContact';
 import getContactById from '../../services/getContactById';

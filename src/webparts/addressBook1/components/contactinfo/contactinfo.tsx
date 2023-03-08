@@ -1,9 +1,9 @@
 import "./contactinfo.css"
-import { IformView } from "../../assets/formview";
 import { useNavigate } from "react-router-dom";
 import * as React from "react";
 import deleteDetails from "../../services/deleteContact";
 import getAllItems from "../../services/getContacts";
+import { IformView } from "../../modals/formview";
 export default function ContactInfo({ setStatesObj, statesObj, newPerson }: { setStatesObj: Function, statesObj: any, newPerson: any }) {
     const navigate = useNavigate();
     function handleEdit() {
